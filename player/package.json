@@ -1,0 +1,15 @@
+{
+  "name": "minecraft-2d-player",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Clean, self-contained HTML player for the 2D Minecraft Scratch project.",
+  "scripts": {
+    "build:player": "node scripts/build-player.mjs",
+    "serve": "node scripts/serve.mjs",
+    "start": "node scripts/build-player.mjs && node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "@turbowarp/packager": "^3.13.0"
+  }
+}

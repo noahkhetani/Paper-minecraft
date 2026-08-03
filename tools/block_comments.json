@@ -1,0 +1,357 @@
+[
+  {
+    "sprite": "Generator",
+    "proccode": "Spawn From Seed %b",
+    "text": "Entry point for generating one chunk. Seeds the RNG from chunkSeed, fills the _RANDOM stream (Fill Random), builds the terrain (init), then places structures for new chunks: end pillars/city, village, dungeons, stronghold/underground structures or nether fortress, buried treasure."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "init %b",
+    "text": "Orchestrates terrain build: Init Prep -> Init Seams -> Init Ground Curves (surface heightmap) -> Init Caves -> trees & shrubs -> post-gen -> water/lava -> surface freezing. Passed a flag for whether this is a fresh chunk vs. a chunk being reloaded."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Init Prep %b",
+    "text": "Sets up a chunk: picks the biome (if unset), sets levelWidth=200 / levelHeight=128 / waterLevel=57, centers the camera (cameraX=levelWidth/2, cameraY=levelHeight/2), advances randomIndex to 50, and fills _LEVEL with the biome's base block (4 overworld / 256 nether / 675 end)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Init Ground Curves",
+    "text": "Builds the surface heightmap. Each column's height is a deterministic sum of sinusoids of (chunkSeed + column) — no randomness, so the same seed yields the same terrain. Biome shape comes from BIOME_DATA (altitudeMultiplier/altitudeOffset). Calls Make New Strip per column and records heights in the altitude list."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Make New Strip %n %n %n ceiling %n",
+    "text": "Fills one vertical column of blocks around the surface height: solid stone below ground, then topsoil above (grass+dirt normally, or sand+sandstone for desert/beach biomes, depths chosen via the _RANDOM stream). Also records tree-spawn candidate points into the tree list."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "random %n %n %b",
+    "text": "Draws the next value from the pre-filled _RANDOM stream (walked by randomIndex, wrapping at the end) and maps it into [from, to] — inclusive integer if both bounds are whole numbers, else a float. Appends the result to the Rand list; pass the boolean true to append rather than reset Rand."
+  },
+  {
+    "sprite": "Pseudorandom Cycle",
+    "proccode": "Fill Random %n",
+    "text": "Fills the _RANDOM list with >10000 deterministic pseudo-random values from the given seed (re-seeding and clearing the list when seed > 0). This is the randomness source for world generation; a given seed always produces the same stream, which the Generator walks via randomIndex."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Get X Y %n",
+    "text": "Converts a 1-based _LEVEL index back to tile coordinates: x = (index-1) mod levelWidth, y = floor((index-1) / levelWidth)."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "isBlock_pr %s %b",
+    "text": "Processor's solidity test for a block type: reads _BLOCK_DATA[type*blockDataStride + 4] (>0 = solid). NOTE: Cursor (isBlock_c) and Tiles (IsBlock_t) each have their own copy with slightly different offsets/special-cases — keep them in sync when changing block solidity."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "getTile_c %n %n",
+    "text": "Reads the block id at tile (x,y) from _LEVEL using the flat index floor(y)*levelWidth + floor(x) + 1 (no bounds clamping)."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "IsBlock_t %n %n",
+    "text": "Tiles' solidity test for the tile at (x,y): true if _BLOCK_DATA[id*blockDataStride + 3] == 'Y', or the tile is a oneblock/special-case block (id 676). Uses the flat index floor(y)*levelWidth + floor(x) + 1."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "translate %n %n",
+    "text": "Moves the single tile-drawing sprite by (tx,ty) tiles and reads the _LEVEL cell at the new position. Boundary quirks: y<0 maps to index 1; any other out-of-bounds maps to the last cell (a 'void' sentinel)."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "Draw",
+    "text": "Core of the scrolling tile renderer. Wraps the single tile sprite across the visible grid and stamps each tile at screen pixel px = round((x-cameraX)*40 + renderOffsetX), py = round((y-cameraY)*40 + renderOffsetY). Tiles are 40px; ~12x9 are visible on the 480x360 stage."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "DrawOrHideTile %s %s %s",
+    "text": "Positions the tile sprite at screen pixel (px,py) with the given costume and shows or hides it (hidden while on the map screen or when the tile is off-screen). Called once per visible tile by Draw."
+  },
+  {
+    "sprite": "Pseudorandom Cycle",
+    "proccode": "randval = Pseudorandom cycle with seed: %n",
+    "text": "Deterministic pseudo-random generator (a multiplicative LCG mod 4294967291). Pass a non-zero seed to (re)seed lastrand, or 0 to advance. Returns the next value in ~[-2147483645, 2147483645]. The value 0 is remapped to a sentinel so the state never sticks. Backs Fill Random."
+  },
+  {
+    "sprite": "Pseudorandom Cycle",
+    "proccode": "randval = Multiply %n by %n add %n mod %n",
+    "text": "Computes (num1*num2 + num3) mod num4 exactly. Because Scratch numbers are floats, large products are computed via a schoolbook split at 10^6 to avoid precision loss."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Get Damage %b",
+    "text": "Melee damage formula. Base = _BLOCK_DATA[heldCostume*blockDataStride+14] (1 for non-weapons; +10 flags a real tool). Sets attackCooldown: swords 0.6s, wood/stone axe 1.2s, copper/iron axe 1.1s, gold/diamond/netherite axe 0.6s, Mace 1.67s, charged spear 0. Falling crit x1.5 (not mace). Falling mace adds round(fall height); enchanted mace (1668) = round(dmg*1.5)+round(fall+3). Strength +2/level, Weakness -4/level, charged spear +speed*15 (elytra speed*25). Result in $data / $Damage; clamped to 0 if <1. See docs/systems/combat-and-damage.md."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Hit Mob %s %b",
+    "text": "Click-on-mob handler (mobIdx, falling?). Skipped entirely while Using Shield. First ~500 lines are item-on-mob interactions (name tag, shears, buckets, dye, saddle, flint&steel on creeper...) each ending with stop. Then: swing rate limit (elapse=timer+0.5), mob i-frames check (_MOB[+12]), Get Damage, crit particles/sounds, writes damage to _MOB[mobIdx+9] (consumed by Mobs' Mob Damaged), knockback direction to _MOB[+18] (+1 if Steve left of mob), and Damage Tool for durability."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Damage Tool %s",
+    "text": "Tool durability loss. No-op in creative or if _BLOCK_DATA[heldCostume*21+10] != 1. Durability lives in _INV[slot*2]; decrement = random(1, random(1,2)) i.e. -1 (75%) or -2 (25%). Below 1 the item is destroyed: _INV[slot*2-1]='#', count 0."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Mob Damaged",
+    "text": "Applies pending damage _MOB[+9] to this clone's health (+10), unless +9 == -5 (interaction flash, no HP loss). Skips while i-framed (+12 > realTimeMs). Survive: +12 = now+0.8 (i-frames) + hurt sound. Death (<1 HP): Death Harvest(drops/XP, overkill if < -20), +12 = now+0.3, death sound, nearby-kill advancements. Side effects: slime 154 splits into 2-3 small (194), anger/state conversions (105->196, 5->104, 37->195...), blaze shoot delay +14 = now+random(1,3)."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Attack? %n",
+    "text": "Per-tick attack check for hostiles (type>99, not in Non-Hostile) while aggro'd (_MOB[+11] > realTimeMs); never in creative/spectator. Ranged mobs (Mobs_That_Shoot pairs) shoot outside melee range. Creeper: fuse +14=now+1.5 within 1.5x1.8, cancels beyond 5x4, explodes via @_Explode (power 3, charged 5). Melee within 1.4x1.8 every 1.5s: shield up -> broadcast DAMAGE_SHIELD (no damage); else health += floor(random(-lo,-hi)*defenseMultiplier), armorDamage=random(3,5), Knock Steve Back_P(0.2-0.5)."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Knock Steve Back_P %b %n",
+    "text": "Adds +/-amount to the global knockback variable (sign from the left? flag: mob left of Steve pushes right). Steve's movement code integrates knockback. No-op in spectator. Typical amounts: 0.2 normal hits, 0.5 heavy hitters."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Process Mobs",
+    "text": "Central mob sim loop: iterates the @_MOB table (row stride = mobMultiplier, row base = cloneAsId), counting live mobs into MobCount and running Process Mob x tickCount per live row. Freed rows (type -1, no clone) are returned via Add To Mob Pool. Afterwards re-spawns any @_Mob_Chunk_Transfer triplet [chunkSeed, type, tile] matching this chunk (mobs that walked through portals). Villager presence also triggers Do Iron Golem Spawning."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Process Mob",
+    "text": "Per-mob tick. Handles mounting rideable types (E + cursor -> gameMode riding*), the Ender Dragon's bespoke arena AI (perch via +14 marker, crystal healing while block 718 exists, fireball 666 every 5-6s, contact damage), then generic life: pending damage -> Mob Damaged; death sink+delete after the 0.3s window; despawn (unnamed hostiles beyond spawnArea instantly, else random(1,15)==5 once +15 expires); spawns the visual clone when the row nears the camera (~9-11 x 8 tiles, +1 flag); else Move Pig then Attack?."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Move Pig %n",
+    "text": "Movement for ALL mobs (not just pigs) + per-type quirks: piglin bartering (gold -> 2-4s -> piglin bartering loot, 1/85 item 995, 1/40 item 679x2-4), piglin aggro within 7 tiles without gold armor, campfire smoke (941) damage random(0.5,1), portal transfer via @_Mob_Chunk_Transfer (chunkSeed +/-1e6 nether, +/-1e8 end), sniffer dig, villager trade assignment. Then the state machine on _MOB[+6]: 0/1 idle-walk (dir in +5), 2/3.5 jump (1-block step-up with headroom checks), 4 falling (vy -0.02/step, terminal -0.4, vy in +8)."
+  },
+  {
+    "sprite": "Mobs",
+    "proccode": "Decide Next Move %b %b %n",
+    "text": "Mob decision step: despawn-if-far check, gravity first (no solid below -> state 4), then either aggro logic (Can See Steve? line-of-sight -> set walk direction +5 toward Steve, Follow Steve to chase) or idle wandering (flip state via round(1-state)/random(0,1), reverse direction when blocked, jump (state 2) when the block ahead is solid but 2 blocks of headroom are clear). Mobs can trigger doors/plates via Activate Tile_iv."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Process Flowing Tile %n %s",
+    "text": "Per-tick update of one flowing fluid tile (water base 38, lava base 81; flow ids = base-offset+depth, offset 18 left / 10 right; air=1). Other fluid above solidifies: lava tile -> stone 4; water meeting lava -> obsidian 52 (source) / cobble 41 (flowing). Falls as base-1 when below is clear. Dries when upstream depth <= own (water instantly; lava 80% chance queued +0.4s via @_GROW). Spreads sideways (depth>=2, sitting on solid/source) via Flow Sideways with depth-1. See docs/systems/fluids-and-redstone.md."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Flow Sideways %n %n",
+    "text": "Sideways fluid spread into tileIdx (baseOffset 18=leftward, 10=rightward). Other fluid family met -> cobblestone 41. If target is not solid and shallower -> write (base-baseOffset)+depth flow tile. Infinite water: a depth-8 water SOURCE met by an opposing flow is rewritten as a full source 38 (two flows meeting regenerate sources)."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Activate Blocks Around %n %b",
+    "text": "Activation pulse: pokes Collateral Checks_pr at the 4 orthogonal neighbours of idx (plus the 4 diagonals unless notDiags). This is the propagation primitive for redstone/levers/pressure plates - each neighbour decides whether it becomes an active device."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Activate Redstone %n %n %n %s",
+    "text": "Device dispatcher for an activated tile. opt: 'o' gated by @_RefData[+4] cooldown (timer+2 default), 't' timed pulse (auto-off ~0.3s), 'r' repeater chain. Routes: repeater family -> Activate Repeater; pistons (_BLOCK_DATA[+19]=='190'; 190/191 up, 206/207 down, 227/228 right, 230/231 left) -> Piston Extend/Contract; doors via @Door Data (Redstone) pairs + arithmetic trapdoor pairs -> Toggle Door; droppers 1708-1711 / dispensers 1683-1686+1634 -> Dropper/Dispenser; copper bulbs toggle id +/-1 + relight; command block 1680 runs @command_block entry."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Detinate %n %n %b",
+    "text": "TNT logic. Priming: @_RefData[+1]='D', fuse +4 = timer+random(2.5,3.1) (chain-ignited: random(0.5,1.5)), primed TNT falls via Initiate Block Fall. End crystal 1568 explodes immediately radius 6. Explosions via Explode Circle_pr: standard 6, small 3.5, mod variants 7/14/28. Entity damage goes through the @_Explode queue."
+  },
+  {
+    "sprite": "Steve",
+    "proccode": "Calculate Fall Damage",
+    "text": "Fall damage on landing: base = floor(ly - fallHeight_s) + 4 (~4 blocks safe). Hay 561 x0.3; Feather Falling boots (slot _INV[77]) x0.7; pointed dripstone 1178 = floor(d*1.7)+4; slime 556 (without down held), boat, nautilus = 0; powder snow 1419 = none (becomes 1420). Skipped while elytra-flying, during the mace-smash window (Mace Y), or after a wind-charge bounce. Applied in loopTicks as health += dmg * resistanceMultiplier - fall damage bypasses armor but respects Resistance."
+  },
+  {
+    "sprite": "Steve",
+    "proccode": "Calculate Speed",
+    "text": "Terrain speed multipliers on steveSpeed (base 0.15 from SteveTick; elytra fixed 0.30): soul sand 0.6 (Soul Speed 1.45), hay 0.3, cobweb-ish 410 0.5, sneaking/shield/eating 0.3, Slowness 0.65, Speed potion 1.5, minecart 1.3 on rail / 0.1 off, swimming 1.3 in water / 0.1 out, boat 1.8 ice / 1.5 water / 0.1 land, riding pig 0.05 / ghast 0.7 / camel 1.0. Armor slots read as _INV[73]=helmet 75=chest 77=legs 79=boots."
+  },
+  {
+    "sprite": "Steve",
+    "proccode": "SteveTick",
+    "text": "Main player physics step. steveSpeed=0.15 base; horizontal _sx = _sx*0.6 +/- 0.05 (friction/accel); knockback integrated then decayed x0.85 (deadzone 0.05); collision probes via getTile_S/isBlock_S at ly-0.15/-0.6/+0.4/+0.9/-1.5; half-tile step-up ly += 0.5; wall nudge lx += 0.999 + onWall timer. Calls Calculate Speed, CheckKeys, Check Half Tile At, In Lava (contact damage), Can Breath? (air), and handles respawn teleport to respawnIndex/worldSpawn."
+  },
+  {
+    "sprite": "Steve",
+    "proccode": "Jump Pressed",
+    "text": "Jump input: buffers the jump for 0.05s (doJump = timer + 0.05; grounded jump applies _sy = 0.1 in the physics step). Double-tapping jump within 0.3s toggles creative fly (IsFlyMode); ghast riding forces fly mode."
+  },
+  {
+    "sprite": "Steve",
+    "proccode": "In Lava %s %s %b",
+    "text": "All standing-in-hazard damage (not just lava): strength = _BLOCK_DATA[tile*21+14] (cactus 11 forced to 1; void below y0 adds +20). Immunities: Fire Resistance, any leather piece vs powder snow, strider riding (floats on lava, space hops _sy 0.36). First contact: health += floor(-t * defenseMultiplier), armorDamage +=1, 'fire' broadcast for lava/fire. Then periodic via the InLava counter: re-damages when it passes 16 (magma 26), reset -50 (magma/cactus -25). Sets the death messages (pricked/void/lava)."
+  },
+  {
+    "sprite": "Steve",
+    "proccode": "Can Breath? %s",
+    "text": "Air + suffocation. _BLOCK_DATA[tile*21+7] in {., D} = unbreathable fluid at head height: air (starts 22) drains 0.04*tickCount; each wrap under 0 deals -2 HP 'drowned'. Prevented by turtle helmet (_INV[73]==1327), Water Breathing, Conduit Power, Breath of the Nautilus. Head inside a solid (+3=='Y', except the +10=='11' class): drains at 0.0666, -1 HP 'suffocated in a wall', also burns a goldenHeart. Oxygen sprite only renders the bubbles."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Do Bow Action",
+    "text": "Bow charging: while held, BowPull += 0.125 * tickCount, capped at 2.5 (~0.7s full charge). Only starts charging if Got any arrows finds ammo. Aim angle comes from the Steves Head sprite direction."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Do Shoot Bow %s %b",
+    "text": "Fires a projectile: consumes an arrow + bow durability, Power enchant adds +1 to BowPull (others +0.5), then pushes a 6-field @_HARVEST record [x, y, id, count, vx, vy] with velocity BowPull*0.3*(sin,cos)(aim) - projectiles ARE harvest entities. Trident (1573): right-click Riptide (1s Cooldowns[7]); thrown -> projectile 1309, the item leaves the inventory carrying its durability in the count field. Blocked if the diagonal launch tile is solid."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Do Throw Projectile %s",
+    "text": "Throws snowball/egg/pearl/potion etc: consumes 1 item, pushes an @_HARVEST record spawned at player + 0.9*(sin,cos)(aim) with fixed velocity 0.65*(sin,cos)(aim). Blocked when the tile under the cursor is solid."
+  },
+  {
+    "sprite": "Cursor",
+    "proccode": "Got any arrows",
+    "text": "Ammo check: scans @_INV slots 36..1 for arrow item 131 (result slot in i_c). Creative mode or an 'infinity' bow returns 99999. Tridents skip the check entirely."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "Do Arrow In Flight %s",
+    "text": "Projectile flight sim for @_HARVEST records: gravity vy -= 0.04/step, sticks into solid blocks. Mob hit (tile match on _MOB[+2], +levelWidth for tall hostiles) writes pending damage to _MOB[+9]: trident 1309 = ceiling(8*speed), others = ceiling(4*speed) where speed = sqrt(vx^2+vy^2) - damage IS impact speed (full-charge bow ~4-5). Wither (159) immune below 200 HP; mob 193 immune. Hits convert 108->109, 105->196, 37->195. Arrow 1422 bursts into item 1311 x random(3,11)."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "Dup: %s Block + Costume 1 Name %s Costume 2 Name: %s %s %s weapon? %b %s other name? %b %s",
+    "text": "Appends a new item/block row to _BLOCK_DATA (21 fields, see docs/data-schemas.md): blank, new id, name, then COPIES fields +3..+15 from source item %num (solidity, hardness, tool, fluid, fall, light, group, harvest, smelt, fuel, damage, tab), then costume ids, durability, root id = own id, grow flag. Used at init and by mods to derive item variants."
+  },
+  {
+    "sprite": "Tiles",
+    "proccode": "Duplicate Traits of %s name %s costume %s %s durab: %s grow %s",
+    "text": "Same as Dup: but appends to _BLOCK_DATA_SAVE (the persistent base table, whose row 0 is a self-documenting header naming all 21 fields). Copies fields +3..+15 from the source item, then costume1, costume2, durability, root id, grow flag."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Process Light Loop",
+    "text": "Drains the @_LightMod relight queue, at most 25 cells per tick (the lighting performance budget - big changes visibly ripple)."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Process Light Mod",
+    "text": "BFS flood-fill relight of one queued cell. @_Light is double-length: first half = sky light (sky row seeded 16), second half = block light (emitters = blocks with negative _BLOCK_DATA[+9], brightness -(+9)). Takes max(neighbour light - absorption(+9)); full-16 sunlight travels straight down without the -1 decay. Higher than stored -> store + enqueue dimmer neighbours (spread); lower -> store + enqueue ALL neighbours (light removal re-propagates)."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Get Light From %n %n",
+    "text": "Reads the light reaching this cell from one neighbour: neighbour's @_Light value minus this block's absorption _BLOCK_DATA[tile*21+9] (clamped >= 0). Result in procTemp."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Get Illumination %n",
+    "text": "Final display brightness for a tile: max(skyLight - globalLight, blockLight) - globalLight is the day/night dimmer, so sky-lit areas darken at night but torch-lit areas don't. skyLight = @_Light[idx], blockLight = @_Light[idx + len(_LEVEL)]."
+  },
+  {
+    "sprite": "Processor",
+    "proccode": "Add To Light Mod %n",
+    "text": "Enqueues a cell into the @_LightMod relight queue (deduplicated). Pass the tile index for the sky channel or tile index + len(_LEVEL) for the block-light channel; block changes typically enqueue both."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Make Seams %s %s %s %s %b %s %b",
+    "text": "The universal vein/cave engine. Budget = levelWidth*maxRow*chance/100 CELLS (cap 300 seams). Each seam: random x, y in [1,maxRow] (up? -> band [maxRow..waterLevel]); size>0.5 -> Fill Circle_g blob radius random(1,size), else single cell. link? -> worm walker: mostly-vertical heading (70% +/-(60-120deg)), step 0.8-1.8, up to 64 steps, heading jitter +/-8 (70%) or +/-35; 4% of steps blow a big chamber (radius random(1.5,size)) recorded in @Caverns for later cave-biomes/structures. Used by Init Seams (the ore table) and Init Caves. See docs/systems/worldgen-caves.md."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Init Seams",
+    "text": "THE ORE TABLE. Sequential Make Seams calls place every ore/pocket with exact density/size/depth: Coal 13 (1.5%/1.4/rows<=70), Iron 16 (0.5%/2/40 + 0.6%/2/60), Gold 15 (0.1% full + 0.13%/31), Redstone 217 (0.1%/1.5/31), Lapis 697 (0.5%/1/15), Emerald 271 (0.1%/0.5/15), Diamond 14 (0.7%/0.6/15), Copper 689 (1.7%/2.5/7 linked), lava pockets 81, gravel/granite/diorite/andesite/tuff/dirt; nether: magma/soul sand/nether gold 346/quartz 347/blackstone/basalt/Ancient Debris 355. Push/Pop Random Stack pins some ores to fixed _RANDOM stream positions. Row 1 = world bottom."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Init Caves",
+    "text": "Carves caves (non-flat worlds): overworld pins randomIndex to 4000/4010, budget random(6,12), air ('1') seams size 4 near-surface band via Make Seams, plus clay 53 blobs only-inside-sand near water level (not in deserts). Nether: random(12,20) air seams size 6, full height. Then randomIndex=5000 and the bottom row is sealed with Bedrock 6."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Fill Horizontal Line %s %s %s %s %s %s %s",
+    "text": "Base placement primitive: writes typ across cells x..x2 of row y (index x+y*levelWidth+1). onlyInID restricts what it may replace (0=any; 4 also matches 628); NEVER overwrites bedrock 6/1175/12. slip+chance: 1-in-chance cells get slip instead (vein impurities; slip 591 is 1/4 replaced by 248; slip 785 queued into @_GROW +400s). Lava 81 placements are registered active. Decrements the Make Seams cell budget (total_g)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Fill Circle_g %s %s %s %s %s %s %s %s",
+    "text": "Scanline circle fill: for each row offset gy in [-r, r], half-width = sqrt(r^2-gy^2), row jittered by random(+/-roughness), delegated to Fill Horizontal Line with onlyInID/slip/chance passthrough."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Add Postgen",
+    "text": "Post-generation sweeps over the whole level. Key rule: DEEPSLATE ORES - any ore in rows y<16 whose id is in the @Deepores pairs table [ore, deepVariant] (13->629, 14->630, 15->631, 16->632, 271->633, 217->634, 697->698, 689->977) is swapped to its deep variant. Also prunes unsupported plants (378) and rolls Ocean Monuments at 1/75 per qualifying ocean-floor cell (biome 14, rows<40)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Stalagmites & Stalactites",
+    "text": "Decorates dripstone caves: every dripstone block 1177 with air above gets 1/3 chance of 1-3 pointed-dripstone 1178 stalagmites growing up; then scans to the ceiling (max row 70; QUIRK: uses hardcoded '+= 200' instead of levelWidth) and 1/2 chance hangs 1-4 stalactites 1179 from stone/59/1177 ceilings."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Spawn Lush Cave",
+    "text": "Converts a cavern (center = $ss_g tile index from @Caverns) into a lush cave: moss 305 shell radius 7 inside stone; moss floors grow glow-berry vines 1351 (1/3) or cave vines 311 (registered active); ceilings decorated with 27 rolls of the 'lush cave' loot table (result 827 queued in @_GROW). Same shell pattern as Spawn Dripstone Cave (1177) and Spawn Deep Dark (sculk 723)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Enlarge pool bounds",
+    "text": "Smooths water-pool edges after the heightmap: where the surface dips below waterLevel, walks the pool edge leftward marking altitude = waterLevel-1 while the water-level row is air, then calls DoSkySea per column to fill the water column."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Make Tree %n %n %n",
+    "text": "Plants a SAPLING, not a tree: picks a random letter from the biome's tree string BIOME_DATA[7+biomeId*9] (O=oak 55, B=birch 176, S=spruce 175, J=jungle 177, D=dark oak 298, A=acacia 405, H=cherry 597, M=46, R=1735, P=1756; default oak), places it on grass (2/998) and queues it in @_GROW at time 0 - the Processor's Grow Sapling/Grow Tree builds the actual tree on the first ticks. Desert biomes on sand plant a 3-tall cactus (11) column instead. Tree SHAPES live in Processor::Grow Tree, not the Generator."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Populate Trees and shrubs",
+    "text": "Vegetation pass over the @tree candidate list (x,y pairs recorded per column by Make New Strip). Pass 1: each candidate rolls random(0,100) vs the biome tree frequency BIOME_DATA[8+biomeId*9] -> Make Tree. Pass 2: random(4,12) remaining candidates get shrubs/grass; flowers drawn as @flowers[random(1,random(1,len))] - the nested random biases toward the FRONT of the flowers list (early = common). Later passes add berry/moss features and vines (Register Activity)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Spawn Nether Tree %s %s",
+    "text": "Stamps a fixed-shape crimson/warped tree using the Spawn Block/Track cursor: trunk height random(2,5) (step +levelWidth = up one row), then a canopy of rows 3/5/5/3 leaves with one shroomlight (396) embedded in the first canopy row."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Push Random Stack %n",
+    "text": "Saves randomIndex onto @RNDStack and jumps it by the offset. With Pop Random Stack (restores the saved cursor) this pins a generation stage to a FIXED position in the _RANDOM stream, so its output is identical regardless of how many draws earlier stages consumed (e.g. parts of the ore table use offset 1999)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Spawn Structures %b",
+    "text": "Per-chunk surface-structure roll: random(1,5)==3 -> none; biomes 1/3/5/14/15/16/17/18 excluded; x = random(10, 0.6*levelWidth). Picks a biome-specific STRUCTURE SEED block and calls Spawn House: 9->700 (1/3), 11->976, 8->975, 12->738 (wide), 10->1174, 7->739, 4->1806|668, default 671 (1/3, not at start) else 707 (1/7). The building itself GROWS from the seed via the Processor's growth system."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Spawn House %n at %n padding %n %n",
+    "text": "Prepares ground and plants a STRUCTURE SEED (not a building): averages terrain height over the footprint, flattens toward it with Pavement Strip (+/-1 steps), paves left+right padding, then places the single seed block one row up and queues it in @_GROW - the Processor grows the full building from it, exactly like tree saplings. Building layouts live in the grow handlers, not the Generator."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Register Activity %n",
+    "text": "Marks a tile ACTIVE (furnace/redstone/fluid/growing): enqueues a block-light update, allocates a refSize(=6)-field record in @_RefData and stores its pointer in @_LevelRef[tile]. refSize is the @_RefData record stride; redstone/TNT use record fields +1 (mode) and +4 (cooldown)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Freeze Surface %n",
+    "text": "Snow/ice pass: per column, finds the topmost solid cell; if above the given row: water 38 -> ice 287 + snow layer 283 on top; other solid blocks get a snow layer (grass 2 -> snowy grass 284). Snow biomes call with row 1 (freeze all), others with waterLevel+15 (mountain snow caps)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Add Water or Lava %n %n %s",
+    "text": "Sprinkles count fluid cells into random air cells (rows < 33 overworld = underground lakes; anywhere in the nether): 30% walk UP to the cave ceiling (hanging drips), 70% walk sideways to a wall; places the fluid and registers it active."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "DoSkySea %n %n %n",
+    "text": "Per-column init: paints sky light 16 straight down the air column (the lighting BFS handles the rest), enqueues relights at the surface, and for columns below the waterLevel arg fills the column with waterTileId (oceans/pools) + queues a @_GROW at the floor (seagrass/kelp)."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Spawn Block %s Track %s",
+    "text": "The structure 'pen': writes the block at cursor $track, registers it active, advances the cursor by the step arg (+/-1 = sideways, +/-levelWidth = up/down). Used by nether trees, end pillars and other stamped shapes."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Structure void %s",
+    "text": "Writes the indestructible barrier block 1175 at the given index unless the cell is already special (1176/457/288/354/353) - used to protect structure interiors from later generation passes."
+  },
+  {
+    "sprite": "Generator",
+    "proccode": "Block Name %s",
+    "text": "Reverse lookup: block/item NAME -> id, computed as round(indexOf(@_BLOCK_DATA, name) / blockDataStride). Used by mods and structure code to reference blocks by name."
+  }
+]

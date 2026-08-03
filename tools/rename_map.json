@@ -1,0 +1,1202 @@
+[
+ {
+  "id": "u",
+  "old": "_lsx",
+  "new": "levelWidth",
+  "owner": "Stage"
+ },
+ {
+  "id": "rw",
+  "old": "_lsy",
+  "new": "levelHeight",
+  "owner": "Stage"
+ },
+ {
+  "id": "$w",
+  "old": "_lsxNeg",
+  "new": "levelWidthNeg",
+  "owner": "Stage"
+ },
+ {
+  "id": "d",
+  "old": "_DMUL",
+  "new": "blockDataStride",
+  "owner": "Stage"
+ },
+ {
+  "id": "Xa",
+  "old": "_MDMUL",
+  "new": "mobDataStride",
+  "owner": "Stage"
+ },
+ {
+  "id": "oy",
+  "old": "_REFSIZE",
+  "new": "refSize",
+  "owner": "Stage"
+ },
+ {
+  "id": "m",
+  "old": "_BiomeID",
+  "new": "biomeId",
+  "owner": "Stage"
+ },
+ {
+  "id": "6W",
+  "old": "_GEN_VERSION",
+  "new": "genVersion",
+  "owner": "Stage"
+ },
+ {
+  "id": ",q",
+  "old": "_ScrX",
+  "new": "cameraX",
+  "owner": "Stage"
+ },
+ {
+  "id": "}q",
+  "old": "_ScrY",
+  "new": "cameraY",
+  "owner": "Stage"
+ },
+ {
+  "id": "p6q",
+  "old": "_BACKGROUND",
+  "new": "backgroundId",
+  "owner": "Stage"
+ },
+ {
+  "id": "Ku",
+  "old": "_SHOWCURSOR",
+  "new": "showCursor",
+  "owner": "Stage"
+ },
+ {
+  "id": "]",
+  "old": "_Cursor",
+  "new": "cursorId",
+  "owner": "Stage"
+ },
+ {
+  "id": "py",
+  "old": "_GLight",
+  "new": "globalLight",
+  "owner": "Stage"
+ },
+ {
+  "id": "+:",
+  "old": "_LightProb",
+  "new": "lightProbe",
+  "owner": "Stage"
+ },
+ {
+  "id": "+w",
+  "old": "_Lighting?",
+  "new": "lightingEnabled",
+  "owner": "Stage"
+ },
+ {
+  "id": "Jy",
+  "old": "_Gamma",
+  "new": "gamma",
+  "owner": "Stage"
+ },
+ {
+  "id": "Gr",
+  "old": "_RandIdx",
+  "new": "randomIndex",
+  "owner": "Stage"
+ },
+ {
+  "id": "kH",
+  "old": "_RandomSeed",
+  "new": "randomSeed",
+  "owner": "Stage"
+ },
+ {
+  "id": "fq",
+  "old": "_CHUNK_SEED",
+  "new": "chunkSeed",
+  "owner": "Stage"
+ },
+ {
+  "id": "3e",
+  "old": "_Numseed",
+  "new": "numericSeed",
+  "owner": "Stage"
+ },
+ {
+  "id": "/:",
+  "old": "_Death Seed",
+  "new": "deathSeed",
+  "owner": "Stage"
+ },
+ {
+  "id": "|",
+  "old": "_Health_s",
+  "new": "health",
+  "owner": "Stage"
+ },
+ {
+  "id": ";f",
+  "old": "_NormHealth",
+  "new": "normalMaxHealth",
+  "owner": "Stage"
+ },
+ {
+  "id": "4e",
+  "old": "_GoldHealth",
+  "new": "goldenHearts",
+  "owner": "Stage"
+ },
+ {
+  "id": "Db",
+  "old": "MAX PLAYER HEALTH",
+  "new": "maxPlayerHealth",
+  "owner": "Stage"
+ },
+ {
+  "id": "Hw",
+  "old": "_Hunger",
+  "new": "hunger",
+  "owner": "Stage"
+ },
+ {
+  "id": "2e",
+  "old": "_FoodSaturation",
+  "new": "foodSaturation",
+  "owner": "Stage"
+ },
+ {
+  "id": "-:",
+  "old": "_FoodMul",
+  "new": "foodMultiplier",
+  "owner": "Stage"
+ },
+ {
+  "id": "^r",
+  "old": "_KnockBack",
+  "new": "knockback",
+  "owner": "Stage"
+ },
+ {
+  "id": "ge",
+  "old": "_DefenseMul",
+  "new": "defenseMultiplier",
+  "owner": "Stage"
+ },
+ {
+  "id": "|e",
+  "old": "_DamageArmor",
+  "new": "armorDamage",
+  "owner": "Stage"
+ },
+ {
+  "id": "hH",
+  "old": "_Max_Reach",
+  "new": "maxReach",
+  "owner": "Stage"
+ },
+ {
+  "id": "*:",
+  "old": "_MaxHarvest",
+  "new": "maxHarvest",
+  "owner": "Stage"
+ },
+ {
+  "id": "gH",
+  "old": "_MaxMobs",
+  "new": "maxMobs",
+  "owner": "Stage"
+ },
+ {
+  "id": "5W",
+  "old": "_MaxMobsBad",
+  "new": "maxHostileMobs",
+  "owner": "Stage"
+ },
+ {
+  "id": "te",
+  "old": "_MobMul",
+  "new": "mobMultiplier",
+  "owner": "Stage"
+ },
+ {
+  "id": "Ib",
+  "old": "_Mob100",
+  "new": "mobCap100",
+  "owner": "Stage"
+ },
+ {
+  "id": "fH",
+  "old": "_SpawnArea",
+  "new": "spawnArea",
+  "owner": "Stage"
+ },
+ {
+  "id": ",:",
+  "old": "_NextSpawn",
+  "new": "nextSpawnTick",
+  "owner": "Stage"
+ },
+ {
+  "id": "v",
+  "old": "_HeldC",
+  "new": "heldCostume",
+  "owner": "Stage"
+ },
+ {
+  "id": "UXR-8[ay{R?^uNqgMa|/",
+  "old": "_HeldC Name",
+  "new": "heldCostumeName",
+  "owner": "Stage"
+ },
+ {
+  "id": "rq",
+  "old": "_HeldInvID",
+  "new": "heldInventoryId",
+  "owner": "Stage"
+ },
+ {
+  "id": "Zq",
+  "old": "_NextSelID",
+  "new": "nextSelectionId",
+  "owner": "Stage"
+ },
+ {
+  "id": "Ju",
+  "old": "_DragSrcID",
+  "new": "dragSourceId",
+  "owner": "Stage"
+ },
+ {
+  "id": "Fr",
+  "old": "_InsideIdx",
+  "new": "insideIndex",
+  "owner": "Stage"
+ },
+ {
+  "id": ".i",
+  "old": "_ClearHarvestIdx",
+  "new": "clearHarvestIndex",
+  "owner": "Stage"
+ },
+ {
+  "id": "dq",
+  "old": "_Creative?",
+  "new": "isCreative",
+  "owner": "Stage"
+ },
+ {
+  "id": ")o",
+  "old": "_Creative Indent",
+  "new": "creativeIndent",
+  "owner": "Stage"
+ },
+ {
+  "id": "H",
+  "old": "_Mode",
+  "new": "gameMode",
+  "owner": "Stage"
+ },
+ {
+  "id": "a6q",
+  "old": "_FAST",
+  "new": "fastMode",
+  "owner": "Stage"
+ },
+ {
+  "id": "tw",
+  "old": "_Locked",
+  "new": "inputLocked",
+  "owner": "Stage"
+ },
+ {
+  "id": "ye",
+  "old": "_Eating",
+  "new": "isEating",
+  "owner": "Stage"
+ },
+ {
+  "id": "mw",
+  "old": "_LastDir",
+  "new": "lastDirection",
+  "owner": "Stage"
+ },
+ {
+  "id": "yw",
+  "old": "_Skin",
+  "new": "skin",
+  "owner": "Stage"
+ },
+ {
+  "id": ")",
+  "old": "_Sound",
+  "new": "soundOn",
+  "owner": "Stage"
+ },
+ {
+  "id": "I",
+  "old": "_Speak",
+  "new": "speakOn",
+  "owner": "Stage"
+ },
+ {
+  "id": "Fu",
+  "old": "_ForceDelay",
+  "new": "forceDelay",
+  "owner": "Stage"
+ },
+ {
+  "id": ":f",
+  "old": "_KeyDelayTrick",
+  "new": "keyDelayTrick",
+  "owner": "Stage"
+ },
+ {
+  "id": "kk",
+  "old": "_ArmFrame",
+  "new": "armFrame",
+  "owner": "Stage"
+ },
+ {
+  "id": "zH",
+  "old": "_Holding_Totem",
+  "new": "holdingTotem",
+  "owner": "Stage"
+ },
+ {
+  "id": "zk",
+  "old": "_ItemTrading",
+  "new": "itemTrading",
+  "owner": "Stage"
+ },
+ {
+  "id": "Lu",
+  "old": "_CurrentVillagerTrade",
+  "new": "currentVillagerTrade",
+  "owner": "Stage"
+ },
+ {
+  "id": "Jb",
+  "old": "EndpY",
+  "new": "endPortalY",
+  "owner": "Stage"
+ },
+ {
+  "id": "IBj%=RRZ7,*a!7N{]o[S",
+  "old": "DragonHealth",
+  "new": "dragonHealth",
+  "owner": "Stage"
+ },
+ {
+  "id": "/VC(VurT;!!0+zt7QybM",
+  "old": "Ender Dragon HP",
+  "new": "enderDragonHp",
+  "owner": "Stage"
+ },
+ {
+  "id": "jH",
+  "old": "_Chars",
+  "new": "fontChars",
+  "owner": "Stage"
+ },
+ {
+  "id": "Ob",
+  "old": "_Biome_Tints",
+  "new": "biomeTints",
+  "owner": "Stage"
+ },
+ {
+  "id": ".:",
+  "old": "_Death Location",
+  "new": "deathLocation",
+  "owner": "Stage"
+ },
+ {
+  "id": "Va",
+  "old": "_Raw Survival",
+  "new": "rawSurvival",
+  "owner": "Stage"
+ },
+ {
+  "id": "4W",
+  "owner": "Stage",
+  "old": "_fcount",
+  "new": "frameCount"
+ },
+ {
+  "id": "6q",
+  "owner": "Stage",
+  "old": "_Spectator",
+  "new": "isSpectator"
+ },
+ {
+  "id": "1e",
+  "owner": "Stage",
+  "old": "_Survival",
+  "new": "isSurvival"
+ },
+ {
+  "id": "Tw",
+  "owner": "Stage",
+  "old": "_SpriteCount",
+  "new": "spriteCount"
+ },
+ {
+  "id": "=f",
+  "owner": "Stage",
+  "old": "_Spyglass",
+  "new": "usingSpyglass"
+ },
+ {
+  "id": "Ye",
+  "owner": "Stage",
+  "old": "_SteveLight",
+  "new": "steveLight"
+ },
+ {
+  "id": "]q",
+  "owner": "Stage",
+  "old": "_Steve_Speed",
+  "new": "steveSpeed"
+ },
+ {
+  "id": "kw",
+  "owner": "Stage",
+  "old": "_ticks",
+  "new": "tickCount"
+ },
+ {
+  "id": "dH",
+  "owner": "Stage",
+  "old": "_tickTime",
+  "new": "tickTime"
+ },
+ {
+  "id": "x",
+  "owner": "Stage",
+  "old": "_TimeReal",
+  "new": "realTimeMs"
+ },
+ {
+  "id": "Ca",
+  "owner": "Stage",
+  "old": "_ToolTipID",
+  "new": "tooltipId"
+ },
+ {
+  "id": "7W",
+  "owner": "Stage",
+  "old": "_ToolTipWait",
+  "new": "tooltipWait"
+ },
+ {
+  "id": "(",
+  "owner": "Stage",
+  "old": "_UnderCursor",
+  "new": "tileUnderCursor"
+ },
+ {
+  "id": "?9#j[iPA{;K4`DR;Q}P9",
+  "owner": "Stage",
+  "old": "_UnderCursor Name",
+  "new": "tileUnderCursorName"
+ },
+ {
+  "id": "(o",
+  "owner": "Stage",
+  "old": "_WalkFrame",
+  "new": "playerWalkFrame"
+ },
+ {
+  "id": "Ba",
+  "owner": "Stage",
+  "old": "_WorldSpawnSeed",
+  "new": "worldSpawnSeed"
+ },
+ {
+  "id": "xk",
+  "owner": "Stage",
+  "old": "_Worldspawn",
+  "new": "worldSpawn"
+ },
+ {
+  "id": "Hr",
+  "owner": "Stage",
+  "old": "_XRAY",
+  "new": "xrayEnabled"
+ },
+ {
+  "id": "$W",
+  "owner": "Stage",
+  "old": "_amplifier",
+  "new": "effectAmplifier"
+ },
+ {
+  "id": ";i",
+  "owner": "Stage",
+  "old": "_effect",
+  "new": "effectId"
+ },
+ {
+  "id": "R",
+  "owner": "Stage",
+  "old": "_loot",
+  "new": "lootRoll"
+ },
+ {
+  "id": "cH",
+  "owner": "Stage",
+  "old": "_resistance mul",
+  "new": "resistanceMultiplier"
+ },
+ {
+  "id": "nw",
+  "owner": "Stage",
+  "old": "_respawnIdx",
+  "new": "respawnIndex"
+ },
+ {
+  "id": "ay",
+  "owner": "Stage",
+  "old": "_respawnSeed",
+  "new": "respawnSeed"
+ },
+ {
+  "id": "Na",
+  "owner": "Stage",
+  "old": "_rocket_ticks",
+  "new": "rocketTicks"
+ },
+ {
+  "id": "f6q",
+  "owner": "Stage",
+  "old": "_wardenx",
+  "new": "wardenX"
+ },
+ {
+  "id": "g6q",
+  "owner": "Stage",
+  "old": "_wardeny",
+  "new": "wardenY"
+ },
+ {
+  "id": "4a",
+  "owner": "Stage",
+  "old": "attack_cooldown",
+  "new": "attackCooldown"
+ },
+ {
+  "id": "$X30k=%i-k*/pbCmk9/o",
+  "owner": "Stage",
+  "old": "charge attack for spear?",
+  "new": "chargingSpearAttack"
+ },
+ {
+  "id": "@tjnvv`ALsq))A:?x^9%",
+  "owner": "Stage",
+  "old": "charge attack time",
+  "new": "chargeAttackTime"
+ },
+ {
+  "id": "3Ee|/auWPxYhDQ}=nLdh",
+  "owner": "Stage",
+  "old": "canclick?",
+  "new": "canClick"
+ },
+ {
+  "id": "dy",
+  "owner": "Stage",
+  "old": "chosen-option",
+  "new": "chosenOption"
+ },
+ {
+  "id": "[vNbz-O:K-E[SKy5FQmv",
+  "owner": "Stage",
+  "old": "day-night-time",
+  "new": "dayNightTime"
+ },
+ {
+  "id": "Qx|+fMyf+WtNE(3Nd?mj",
+  "owner": "Stage",
+  "old": "elapsed time",
+  "new": "elapsedTime"
+ },
+ {
+  "id": "[f",
+  "owner": "Stage",
+  "old": "game string",
+  "new": "gameString"
+ },
+ {
+  "id": "vH",
+  "owner": "Stage",
+  "old": "just interacted with mob",
+  "new": "justInteractedWithMob"
+ },
+ {
+  "id": "%W",
+  "owner": "Stage",
+  "old": "lightningx",
+  "new": "lightningX"
+ },
+ {
+  "id": "s6q",
+  "owner": "Stage",
+  "old": "nextelytradamage",
+  "new": "nextElytraDamage"
+ },
+ {
+  "id": ",dE-iR=_pr!wP]=%]3s:",
+  "owner": "Stage",
+  "old": "broadcast#",
+  "new": "broadcastNumber"
+ },
+ {
+  "id": "u2v]tC=v1C,ke1q}p3qP",
+  "owner": "Stage",
+  "old": "Speaker #",
+  "new": "speakerNumber"
+ },
+ {
+  "id": "vw",
+  "owner": "Generator",
+  "old": "_WaterLevel",
+  "new": "waterLevel"
+ },
+ {
+  "id": "Go",
+  "owner": "Generator",
+  "old": "BMUL",
+  "new": "biomeDataStride"
+ },
+ {
+  "id": "/dq",
+  "owner": "Generator",
+  "old": "vmul",
+  "new": "altitudeMultiplier"
+ },
+ {
+  "id": "9w",
+  "owner": "Generator",
+  "old": "voff",
+  "new": "altitudeOffset"
+ },
+ {
+  "id": "Pdq",
+  "owner": "Generator",
+  "old": "water Tile ID",
+  "new": "waterTileId"
+ },
+ {
+  "id": ";j",
+  "owner": "Generator",
+  "old": "g_IsFlat",
+  "new": "isFlatWorld"
+ },
+ {
+  "id": "S|e",
+  "owner": "Generator",
+  "old": "g_worldSize",
+  "new": "worldSize"
+ },
+ {
+  "id": "Ay",
+  "owner": "Generator",
+  "old": "g_tyy",
+  "new": "terrainHeight"
+ },
+ {
+  "id": "D",
+  "owner": "Generator",
+  "old": "i_z3",
+  "new": "stripFillIndex"
+ },
+ {
+  "id": "|t",
+  "owner": "Generator",
+  "old": "xx_g",
+  "new": "genTileX"
+ },
+ {
+  "id": "Jo",
+  "owner": "Generator",
+  "old": "yy_g",
+  "new": "genTileY"
+ },
+ {
+  "id": "Ho",
+  "owner": "Generator",
+  "old": "dir_g",
+  "new": "genDirection"
+ },
+ {
+  "id": "8bw",
+  "owner": "Generator",
+  "old": "refIdx_g",
+  "new": "genRefIndex"
+ },
+ {
+  "id": "+sq",
+  "owner": "Generator",
+  "old": "x_g",
+  "new": "genX"
+ },
+ {
+  "id": "Dw",
+  "owner": "Generator",
+  "old": "y_g",
+  "new": "genY"
+ },
+ {
+  "id": "au",
+  "owner": "Generator",
+  "old": "i_g",
+  "new": "genIndex"
+ },
+ {
+  "id": "-sq",
+  "owner": "Generator",
+  "old": "t2_g",
+  "new": "genTempB"
+ },
+ {
+  "id": "vdq",
+  "owner": "Generator",
+  "old": "LastY",
+  "new": "lastY"
+ },
+ {
+  "id": "Bi",
+  "owner": "Generator",
+  "old": "sand",
+  "new": "sandDepth"
+ },
+ {
+  "id": "$Q",
+  "owner": "Generator",
+  "old": "dy",
+  "new": "genVerticalStep"
+ },
+ {
+  "id": "G",
+  "owner": "Processor",
+  "old": "t_pr",
+  "new": "procTemp"
+ },
+ {
+  "id": "NP",
+  "owner": "Processor",
+  "old": "dir_pr",
+  "new": "procDirection"
+ },
+ {
+  "id": "tq",
+  "owner": "Processor",
+  "old": "gt_i",
+  "new": "growTileIndex"
+ },
+ {
+  "id": "n",
+  "owner": "Processor",
+  "old": "tile_pr",
+  "new": "procTile"
+ },
+ {
+  "id": "yq",
+  "owner": "Processor",
+  "old": "refIdx_pr",
+  "new": "procRefIndex"
+ },
+ {
+  "id": "#9",
+  "owner": "Processor",
+  "old": "refIt_pr",
+  "new": "procRefItem"
+ },
+ {
+  "id": "k",
+  "owner": "Processor",
+  "old": "refTile_pr",
+  "new": "procRefTile"
+ },
+ {
+  "id": "vu",
+  "owner": "Processor",
+  "old": "refMode_pr",
+  "new": "procRefMode"
+ },
+ {
+  "id": "Sy",
+  "owner": "Processor",
+  "old": "checkTile_pr",
+  "new": "procCheckTile"
+ },
+ {
+  "id": "Nxq",
+  "owner": "Processor",
+  "old": "count_pr",
+  "new": "procCount"
+ },
+ {
+  "id": "Xe",
+  "owner": "Processor",
+  "old": "pr_dist",
+  "new": "procDistance"
+ },
+ {
+  "id": "Et",
+  "owner": "Processor",
+  "old": "pr_tool",
+  "new": "procTool"
+ },
+ {
+  "id": "^q",
+  "owner": "Processor",
+  "old": "data2",
+  "new": "procDataB"
+ },
+ {
+  "id": "F78d|jaL`Cn={QvbR64e",
+  "owner": "Processor",
+  "old": "LightS2",
+  "new": "lightSouth2"
+ },
+ {
+  "id": "uA=^n,ttm{ZE[,e7_twb",
+  "owner": "Processor",
+  "old": "LightE2",
+  "new": "lightEast2"
+ },
+ {
+  "id": "@`Lb:+mn;`$KH;mIZII7",
+  "owner": "Processor",
+  "old": "LightW2",
+  "new": "lightWest2"
+ },
+ {
+  "id": "Hffcd[$vqA/_T/,bCCaY",
+  "owner": "Processor",
+  "old": "LightN2",
+  "new": "lightNorth2"
+ },
+ {
+  "id": "g/TE]|MrWz.I9?iuoKHh",
+  "owner": "Processor",
+  "old": "iterate-commandblock",
+  "new": "iterateCommandBlock"
+ },
+ {
+  "id": "Jh}9,uHTFDOkj/Ye6SHy",
+  "owner": "Processor",
+  "old": "iterate-command",
+  "new": "iterateCommand"
+ },
+ {
+  "id": "U",
+  "owner": "Cursor",
+  "old": "tile_c",
+  "new": "cursorTile"
+ },
+ {
+  "id": "Ci",
+  "owner": "Cursor",
+  "old": "refIdx_c",
+  "new": "cursorRefIndex"
+ },
+ {
+  "id": "5d",
+  "owner": "Cursor",
+  "old": "tileIdx_c",
+  "new": "cursorTileIndex"
+ },
+ {
+  "id": "Eqq",
+  "owner": "Cursor",
+  "old": "lastX_c",
+  "new": "lastCursorX"
+ },
+ {
+  "id": "r{q",
+  "owner": "Cursor",
+  "old": "lastY_c",
+  "new": "lastCursorY"
+ },
+ {
+  "id": "ba",
+  "owner": "Cursor",
+  "old": "invIdx_c",
+  "new": "cursorInventoryIndex"
+ },
+ {
+  "id": "5Q",
+  "owner": "Cursor",
+  "old": "newTip",
+  "new": "newTooltip"
+ },
+ {
+  "id": "EO",
+  "owner": "Cursor",
+  "old": "lArmTick",
+  "new": "leftArmTick"
+ },
+ {
+  "id": "lwq",
+  "owner": "Cursor",
+  "old": "DUR",
+  "new": "durability"
+ },
+ {
+  "id": "Vi",
+  "owner": "Cursor",
+  "old": "_Campfire",
+  "new": "campfire"
+ },
+ {
+  "id": "m^q",
+  "owner": "Cursor",
+  "old": "_Food",
+  "new": "foodItem"
+ },
+ {
+  "id": "pu",
+  "owner": "Cursor",
+  "old": "Dig_Type",
+  "new": "digType"
+ },
+ {
+  "id": "nzbeK:H}kFz6?tL2x[Eq",
+  "owner": "Cursor",
+  "old": "pr_dist",
+  "new": "cursorDistance"
+ },
+ {
+  "id": "=w",
+  "owner": "Cursor",
+  "old": "data2",
+  "new": "cursorDataB"
+ },
+ {
+  "id": "1c",
+  "owner": "Cursor",
+  "old": "data3",
+  "new": "cursorDataC"
+ },
+ {
+  "id": "Sw",
+  "owner": "Cursor",
+  "old": "xx",
+  "new": "cursorTileX"
+ },
+ {
+  "id": "Wt",
+  "owner": "Cursor",
+  "old": "yy",
+  "new": "cursorTileY"
+ },
+ {
+  "id": "uq",
+  "owner": "Tiles",
+  "old": "ix",
+  "new": "renderOffsetX"
+ },
+ {
+  "id": "jQ",
+  "owner": "Tiles",
+  "old": "iy",
+  "new": "renderOffsetY"
+ },
+ {
+  "id": "Nx",
+  "owner": "Tiles",
+  "old": "CloneAsID",
+  "new": "cloneAsId"
+ },
+ {
+  "id": "wq",
+  "owner": "Tiles",
+  "old": "i_t",
+  "new": "tilesIndex"
+ },
+ {
+  "id": "ew",
+  "owner": "Tiles",
+  "old": "refIdx_t",
+  "new": "tilesRefIndex"
+ },
+ {
+  "id": "/w",
+  "owner": "Tiles",
+  "old": "t_tileIdx",
+  "new": "tilesTileIndex"
+ },
+ {
+  "id": "Mx",
+  "owner": "Tiles",
+  "old": "t_ilumTmp",
+  "new": "illuminationTemp"
+ },
+ {
+  "id": "5j",
+  "owner": "Tiles",
+  "old": "_gold-count",
+  "new": "goldCount"
+ },
+ {
+  "id": "mt",
+  "owner": "Tiles",
+  "old": "isfull?",
+  "new": "isFull"
+ },
+ {
+  "id": "-I",
+  "owner": "Tiles",
+  "old": "beacon level #",
+  "new": "beaconLevelNum"
+ },
+ {
+  "id": "T{Wy$^R;,=KFVolmN!`a",
+  "owner": "Tiles",
+  "old": "clonesid",
+  "new": "clonesId"
+ },
+ {
+  "id": "o",
+  "owner": "Mobs",
+  "old": "cloneAsID",
+  "new": "cloneAsId"
+ },
+ {
+  "id": "eq",
+  "owner": "Mobs",
+  "old": "tileIdxP",
+  "new": "mobTileIndex"
+ },
+ {
+  "id": "K",
+  "owner": "Mobs",
+  "old": "typP",
+  "new": "mobType"
+ },
+ {
+  "id": "se",
+  "owner": "Mobs",
+  "old": "dirP",
+  "new": "mobDirection"
+ },
+ {
+  "id": "^e",
+  "owner": "Mobs",
+  "old": "light_p",
+  "new": "mobLight"
+ },
+ {
+  "id": "~Sq",
+  "owner": "Mobs",
+  "old": "lightMod_p",
+  "new": "mobLightMod"
+ },
+ {
+  "id": "*e",
+  "owner": "Mobs",
+  "old": "healthP",
+  "new": "mobHealth"
+ },
+ {
+  "id": "~j",
+  "owner": "Mobs",
+  "old": "hurtingP",
+  "new": "mobHurting"
+ },
+ {
+  "id": "Fy",
+  "owner": "Mobs",
+  "old": "inWaterP",
+  "new": "mobInWater"
+ },
+ {
+  "id": "Re",
+  "owner": "Mobs",
+  "old": "tileP",
+  "new": "mobTile"
+ },
+ {
+  "id": "`e",
+  "owner": "Mobs",
+  "old": "stateP",
+  "new": "mobState"
+ },
+ {
+  "id": "Yu",
+  "owner": "Mobs",
+  "old": "halfY_P",
+  "new": "mobHalfY"
+ },
+ {
+  "id": "?w",
+  "owner": "Mobs",
+  "old": "idx_p",
+  "new": "mobIndex"
+ },
+ {
+  "id": "B%",
+  "owner": "Mobs",
+  "old": "ofy_p",
+  "new": "mobOffsetY"
+ },
+ {
+  "id": "Ut",
+  "owner": "Mobs",
+  "old": "MDOff",
+  "new": "mobDataOffset"
+ },
+ {
+  "id": "AF",
+  "owner": "Mobs",
+  "old": "mob x",
+  "new": "mobX"
+ },
+ {
+  "id": "SF",
+  "owner": "Mobs",
+  "old": "mob y",
+  "new": "mobY"
+ },
+ {
+  "id": "GAq",
+  "owner": "Mobs",
+  "old": "mob dist",
+  "new": "mobDistance"
+ },
+ {
+  "id": "nq",
+  "owner": "Mobs",
+  "old": "digIdx",
+  "new": "digIndex"
+ },
+ {
+  "id": "dKq",
+  "owner": "Mobs",
+  "old": "Drop Amount",
+  "new": "dropAmount"
+ },
+ {
+  "id": "DW",
+  "owner": "Mobs",
+  "old": "Common drops",
+  "new": "commonDrops"
+ },
+ {
+  "id": "%f",
+  "owner": "Mobs",
+  "old": "Pillager Spawn",
+  "new": "pillagerSpawn"
+ },
+ {
+  "id": "{j",
+  "owner": "Mobs",
+  "old": "within range",
+  "new": "withinRange"
+ }
+]
